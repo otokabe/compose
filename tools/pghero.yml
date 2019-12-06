@@ -1,0 +1,10 @@
+version: '2'
+services:
+  pghero:
+    image: ankane/pghero:v2.4.1
+    container_name: pghero
+    environment:
+      DATABASE_URL: postgres://odoo:odoo@postgres:5432/odoo
+    ports:
+      - 5556:8080
+    network_mode: otokabe_otonet
