@@ -1,7 +1,7 @@
 version: '2'
 services:
   zookeeper:
-    image: otokabe/cp-zookeeper:5.3.1
+    image: confluentinc/cp-zookeeper:5.3.1
     container_name: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
@@ -9,7 +9,7 @@ services:
     networks: 
       - otonet
   kafka:
-    image: otokabe/cp-kafka:5.3.1
+    image: confluentinc/cp-kafka:5.3.1
     container_name: kafka
     ports:
       - 9092:9092
@@ -17,7 +17,7 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://:9092
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://dbbottle.local:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
