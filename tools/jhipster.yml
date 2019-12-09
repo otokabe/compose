@@ -1,0 +1,27 @@
+version: '2'
+services:
+  jhidev:
+    image: jhipster/jhipster:v6.5.1
+    container_name: jhidev
+    volumes:
+      - $HOME/Workspace/development/micro:/home/jhipster/app
+      - $HOME/.m2:/home/jhipster/.m2
+    ports:
+      - 8080:8080
+      - 9000:9000
+      - 3001:3001
+    environment:
+      - _JAVA_OPTIONS='-Xmx512m -Xms256m'
+      - PGADMIN_DEFAULT_PASSWORD=tiga#333
+    networks: 
+      - otonet
+  jdlstudio:
+    image: jhipster/jdl-studio:latest
+    container_name: jdlstudio
+    ports:
+      - 18080:80
+    networks: 
+      - otonet
+networks:
+  otonet:
+    driver: bridge
