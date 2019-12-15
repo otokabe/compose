@@ -17,7 +17,8 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://:9092
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://dbbottle.local:9092
+#      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -27,7 +28,10 @@ services:
     image: otokabe/postgres:12.1
     container_name: postgres
     volumes:
-      - $HOME/docker/volumes/postgres/data:/var/lib/postgresql/data
+#      - $HOME/docker/volumes/postgres/data:/var/lib/postgresql/data
+#      - C:/ProgramData/Docker/volumes/postgres/data:/var/lib/postgresql/data
+#      - C:/Users/user/docker/volumes/postgres/data:/var/lib/postgresql/data
+      - data-postgresql:/var/lib/postgresql/data
     ports:
       - 5432:5432
     environment:
@@ -41,6 +45,23 @@ services:
       - 5555:80
     environment:
       - PGADMIN_DEFAULT_EMAIL=otokabe
+      - PGADMIN_DEFAULT_PASSWORD=tiga#333
+    networks: 
+      - otonet
+  jhidev:
+    image: jhipster/jhipster:v6.5.1
+    container_name: jhidev
+    volumes:
+#      - $HOME/Workspace/development/micro:/home/jhipster/app
+#      - $HOME/.m2:/home/jhipster/.m2
+      - C:/Users/user/beceng/otokabe:/home/jhipster/app
+      - C:/Users/user/.m2:/home/jhipster/.m2
+    ports:
+      - 8080:8080
+      - 9000:9000
+      - 3001:3001
+    environment:
+      - _JAVA_OPTIONS='-Xmx512m -Xms256m'
       - PGADMIN_DEFAULT_PASSWORD=tiga#333
     networks: 
       - otonet
@@ -94,3 +115,6 @@ services:
 networks:
   otonet:
     driver: bridge
+volumes:
+  data-postgresql:
+     driver: local
