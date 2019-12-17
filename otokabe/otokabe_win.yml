@@ -1,7 +1,7 @@
 version: '2'
 services:
   zookeeper:
-    image: otokabe/cp-zookeeper:5.3.1
+    image: confluentinc/cp-zookeeper:5.3.1
     container_name: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
@@ -9,7 +9,7 @@ services:
     networks:
       - otonet
   kafka:
-    image: otokabe/cp-kafka:5.3.1
+    image: confluentinc/cp-kafka:5.3.1
     container_name: kafka
     ports:
       - 9092:9092
@@ -17,7 +17,7 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://:9092
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://registry:29092,PLAINTEXT_HOST://kafka:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://kafka:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -33,6 +33,7 @@ services:
     ports:
       - 5432:5432
     environment:
+      - POSTGRES_USER=otokabe
       - POSTGRES_PASSWORD=tiga#333
     networks:
       - otonet
@@ -51,7 +52,7 @@ services:
     container_name: jhidev
     volumes:
       - D:\MavenRepository:/home/jhipster/.m2
-    ports:
+    #ports:
     # - 8080:8080
     # - 9000:9000
     # - 3001:3001
@@ -91,8 +92,8 @@ services:
       - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://registry:$${jhipster.registry.password}@registry:8761/eureka
       - SPRING_CLOUD_CONFIG_URI=http://registry:$${jhipster.registry.password}@registry:8761/config
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://registry:5432/secuaa
-      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/secuaa
+      - SPRING_DATASOURCE_USERNAME=otokabe
       - SPRING_DATASOURCE_PASSWORD=tiga#333
       - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
       - KAFKA_CONSUMER_KEY_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
