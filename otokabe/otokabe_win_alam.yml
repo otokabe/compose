@@ -6,7 +6,7 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
-    networks:
+    networks: 
       - otonet
   kafka:
     image: confluentinc/cp-kafka:5.3.1
@@ -17,25 +17,26 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://:9092
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://kafka:9092
+#      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    networks:
+    networks: 
       - otonet
   postgres:
     image: otokabe/postgres:12.1
     container_name: postgres
     volumes:
-      - pgdata:/var/lib/postgresql/data
-      - pgconf:/etc/postgresql
-      - pglog:/var/log/postgresql
+#      - $HOME/docker/volumes/postgres/data:/var/lib/postgresql/data
+#      - C:/ProgramData/Docker/volumes/postgres/data:/var/lib/postgresql/data
+#      - C:/Users/user/docker/volumes/postgres/data:/var/lib/postgresql/data
+      - data-postgresql:/var/lib/postgresql/data
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_USER=otokabe
       - POSTGRES_PASSWORD=tiga#333
-    networks:
+    networks: 
       - otonet
   pgadmin:
     image: otokabe/pgadmin4:4.15
@@ -45,27 +46,30 @@ services:
     environment:
       - PGADMIN_DEFAULT_EMAIL=otokabe
       - PGADMIN_DEFAULT_PASSWORD=tiga#333
-    networks:
+    networks: 
       - otonet
   jhidev:
     image: jhipster/jhipster:v6.5.1
     container_name: jhidev
     volumes:
-      - D:\MavenRepository:/home/jhipster/.m2
-    #ports:
-    # - 8080:8080
-    # - 9000:9000
-    # - 3001:3001
+#      - $HOME/Workspace/development/micro:/home/jhipster/app
+#      - $HOME/.m2:/home/jhipster/.m2
+      - C:/Users/user/beceng/otokabe:/home/jhipster/app
+      - C:/Users/user/.m2:/home/jhipster/.m2
+    ports:
+      - 8080:8080
+      - 9000:9000
+      - 3001:3001
     environment:
       - _JAVA_OPTIONS='-Xmx512m -Xms256m'
       - PGADMIN_DEFAULT_PASSWORD=tiga#333
-    networks:
+    networks: 
       - otonet
   registry:
     image: otokabe/registry:5.0.2
     container_name: registry
     volumes:
-      - D:\Documents\Workspaces\Beceng\Otokabe\registry\central-config:/central-config
+      - $HOME/docker/volumes/registry/central-config:/central-config
     # When run with the "dev" Spring profile, the JHipster Registry will
     # read the config from the local filesystem (central-server-config directory)
     # When run with the "prod" Spring profile, it will read the configuration from a Git repository
@@ -81,7 +85,7 @@ services:
       # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_PATHS=central-config
     ports:
       - 8761:8761
-    networks:
+    networks: 
       - otonet
   secuaa:
     image: otokabe/secuaa:latest
@@ -103,20 +107,14 @@ services:
       - KAFKA_CONSUMER_AUTO_OFFSET_RESET=earliest
       - KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka:9092
       - KAFKA_PRODUCER_KEY_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
-      - KAFKA_PRODUCER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+      - KAFKA_PRODUCER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer    
     ports:
       - 8771:8771
-    networks:
+    networks: 
       - otonet
 networks:
   otonet:
     driver: bridge
 volumes:
-  pgdata:
-    driver: local
-  pgconf:
-    driver: local
-  pglog:
-    driver: local
-  rglog:
-    driver: local
+  data-postgresql:
+     driver: local
