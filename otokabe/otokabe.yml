@@ -86,7 +86,8 @@ services:
       - KAFKA_CONSUMER_AUTO_OFFSET_RESET=earliest
       - KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka:9092
       - KAFKA_PRODUCER_KEY_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
-      - KAFKA_PRODUCER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer    
+      - KAFKA_PRODUCER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+      - EUREKA_INSTANCE_HOSTNAME=dbbottle.local
     ports:
       - 8771:8771
     networks: 
@@ -107,11 +108,12 @@ services:
       - KAFKA_CONSUMER_KEY_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
       - KAFKA_CONSUMER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
       - KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka:9092
-      - KAFKA_CONSUMER_GROUP_ID=secuaa
+      - KAFKA_CONSUMER_GROUP_ID=basexe
       - KAFKA_CONSUMER_AUTO_OFFSET_RESET=earliest
       - KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka:9092
       - KAFKA_PRODUCER_KEY_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
-      - KAFKA_PRODUCER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer    
+      - KAFKA_PRODUCER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+      - EUREKA_INSTANCE_HOSTNAME=dbbottle.local
     ports:
       - 3000:3000
     networks: 
@@ -132,11 +134,12 @@ services:
       - KAFKA_CONSUMER_KEY_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
       - KAFKA_CONSUMER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
       - KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka:9092
-      - KAFKA_CONSUMER_GROUP_ID=secuaa
+      - KAFKA_CONSUMER_GROUP_ID=customer
       - KAFKA_CONSUMER_AUTO_OFFSET_RESET=earliest
       - KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka:9092
       - KAFKA_PRODUCER_KEY_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
-      - KAFKA_PRODUCER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer    
+      - KAFKA_PRODUCER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+      - EUREKA_INSTANCE_HOSTNAME=dbbottle.local
     ports:
       - 3100:3100
     networks: 
@@ -157,11 +160,12 @@ services:
       - KAFKA_CONSUMER_KEY_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
       - KAFKA_CONSUMER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
       - KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka:9092
-      - KAFKA_CONSUMER_GROUP_ID=secuaa
+      - KAFKA_CONSUMER_GROUP_ID=company
       - KAFKA_CONSUMER_AUTO_OFFSET_RESET=earliest
       - KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka:9092
       - KAFKA_PRODUCER_KEY_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
-      - KAFKA_PRODUCER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer    
+      - KAFKA_PRODUCER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+      - EUREKA_INSTANCE_HOSTNAME=dbbottle.local
     ports:
       - 3200:3200
     networks: 
@@ -182,11 +186,12 @@ services:
       - KAFKA_CONSUMER_KEY_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
       - KAFKA_CONSUMER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
       - KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka:9092
-      - KAFKA_CONSUMER_GROUP_ID=secuaa
+      - KAFKA_CONSUMER_GROUP_ID=otokabe
       - KAFKA_CONSUMER_AUTO_OFFSET_RESET=earliest
       - KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka:9092
       - KAFKA_PRODUCER_KEY_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
-      - KAFKA_PRODUCER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer    
+      - KAFKA_PRODUCER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+      - EUREKA_INSTANCE_HOSTNAME=dbbottle.local
     ports:
       - 3300:3300
     networks: 
