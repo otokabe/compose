@@ -11,7 +11,7 @@ services:
       - 9000:9000
       - 3001:3001
     environment:
-      - _JAVA_OPTIONS='-Xmx512m -Xms256m'
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
       - PGADMIN_DEFAULT_PASSWORD=tiga#333
     networks: 
       - otonet

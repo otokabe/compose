@@ -59,6 +59,7 @@ services:
       - SPRING_SECURITY_USER_PASSWORD=dirahasiakan
       - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=native
       - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config
+      - EUREKA_SERVER_PEER_NODE_READ_TIMEOUT_MS=300000
       # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=git
       # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_URI=https://github.com/jhipster/jhipster-registry/
       # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_PATHS=central-config
@@ -67,13 +68,17 @@ services:
     networks: 
       - otonet
   secuaa:
-    image: otokabe/secuaa:latest
+    image: otokabe/secuaa:0.0.1
     container_name: secuaa
     environment:
       - _JAVA_OPTIONS=-Xmx512m -Xms256m
       - SPRING_PROFILES_ACTIVE=dev,swagger
       - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://registry:$${jhipster.registry.password}@registry:8761/eureka
+      - EUREKA_INSTANCE_HOSTNAME=dbbottle.local
+      - EUREKA_CLIENT_REGISTRY_FETCH_INTERVAL_SECONDS=90
+      - EUREKA_INSTANCE_LEASE_RENEWAL_INTERVAL_IN_SECONDS=30
+      - EUREKA_INSTANCELEASE_EXPIRATION_DURATION_IN_SECONDS=90
       - SPRING_CLOUD_CONFIG_URI=http://registry:$${jhipster.registry.password}@registry:8761/config
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/secuaa
       - SPRING_DATASOURCE_USERNAME=otokabe
@@ -86,9 +91,121 @@ services:
       - KAFKA_CONSUMER_AUTO_OFFSET_RESET=earliest
       - KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka:9092
       - KAFKA_PRODUCER_KEY_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
-      - KAFKA_PRODUCER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer    
+      - KAFKA_PRODUCER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
     ports:
       - 8771:8771
+    networks: 
+      - otonet
+  basexe:
+    image: otokabe/basexe:0.0.1
+    container_name: basexe
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=dev
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://registry:$${jhipster.registry.password}@registry:8761/eureka
+      - EUREKA_INSTANCE_HOSTNAME=dbbottle.local
+      - EUREKA_CLIENT_REGISTRY_FETCH_INTERVAL_SECONDS=90
+      - EUREKA_INSTANCE_LEASE_RENEWAL_INTERVAL_IN_SECONDS=30
+      - EUREKA_INSTANCELEASE_EXPIRATION_DURATION_IN_SECONDS=90
+      - SPRING_CLOUD_CONFIG_URI=http://registry:$${jhipster.registry.password}@registry:8761/config
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/basexe
+      - SPRING_DATASOURCE_USERNAME=otokabe
+      - SPRING_DATASOURCE_PASSWORD=tiga#333
+      - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
+      - KAFKA_CONSUMER_KEY_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+      - KAFKA_CONSUMER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+      - KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka:9092
+      - KAFKA_CONSUMER_GROUP_ID=basexe
+      - KAFKA_CONSUMER_AUTO_OFFSET_RESET=earliest
+      - KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka:9092
+      - KAFKA_PRODUCER_KEY_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+      - KAFKA_PRODUCER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+    ports:
+      - 3000:3000
+    networks: 
+      - otonet
+  customer:
+    image: otokabe/customer:0.0.1
+    container_name: customer
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=dev
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://registry:$${jhipster.registry.password}@registry:8761/eureka
+      - EUREKA_INSTANCE_HOSTNAME=dbbottle.local
+      - EUREKA_CLIENT_REGISTRY_FETCH_INTERVAL_SECONDS=90
+      - EUREKA_INSTANCE_LEASE_RENEWAL_INTERVAL_IN_SECONDS=30
+      - EUREKA_INSTANCELEASE_EXPIRATION_DURATION_IN_SECONDS=90
+      - SPRING_CLOUD_CONFIG_URI=http://registry:$${jhipster.registry.password}@registry:8761/config
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/customer
+      - SPRING_DATASOURCE_USERNAME=otokabe
+      - SPRING_DATASOURCE_PASSWORD=tiga#333
+      - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
+      - KAFKA_CONSUMER_KEY_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+      - KAFKA_CONSUMER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+      - KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka:9092
+      - KAFKA_CONSUMER_GROUP_ID=customer
+      - KAFKA_CONSUMER_AUTO_OFFSET_RESET=earliest
+      - KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka:9092
+      - KAFKA_PRODUCER_KEY_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+      - KAFKA_PRODUCER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+    ports:
+      - 3100:3100
+    networks: 
+      - otonet
+  company:
+    image: otokabe/company:0.0.1
+    container_name: company
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=dev
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://registry:$${jhipster.registry.password}@registry:8761/eureka
+      - EUREKA_INSTANCE_HOSTNAME=dbbottle.local
+      - EUREKA_CLIENT_REGISTRY_FETCH_INTERVAL_SECONDS=90
+      - EUREKA_INSTANCE_LEASE_RENEWAL_INTERVAL_IN_SECONDS=30
+      - EUREKA_INSTANCELEASE_EXPIRATION_DURATION_IN_SECONDS=90
+      - SPRING_CLOUD_CONFIG_URI=http://registry:$${jhipster.registry.password}@registry:8761/config
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/company
+      - SPRING_DATASOURCE_USERNAME=otokabe
+      - SPRING_DATASOURCE_PASSWORD=tiga#333
+      - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
+      - KAFKA_CONSUMER_KEY_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+      - KAFKA_CONSUMER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+      - KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka:9092
+      - KAFKA_CONSUMER_GROUP_ID=company
+      - KAFKA_CONSUMER_AUTO_OFFSET_RESET=earliest
+      - KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka:9092
+      - KAFKA_PRODUCER_KEY_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+      - KAFKA_PRODUCER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+    ports:
+      - 3200:3200
+    networks: 
+      - otonet
+  otokabe:
+    image: otokabe/otokabe:0.0.1
+    container_name: otokabe
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=dev
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://registry:$${jhipster.registry.password}@registry:8761/eureka
+      - EUREKA_INSTANCE_HOSTNAME=dbbottle.local
+      - EUREKA_CLIENT_REGISTRY_FETCH_INTERVAL_SECONDS=90
+      - EUREKA_INSTANCE_LEASE_RENEWAL_INTERVAL_IN_SECONDS=30
+      - EUREKA_INSTANCELEASE_EXPIRATION_DURATION_IN_SECONDS=90
+      - SPRING_CLOUD_CONFIG_URI=http://registry:$${jhipster.registry.password}@registry:8761/config
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/otokabe
+      - SPRING_DATASOURCE_USERNAME=otokabe
+      - SPRING_DATASOURCE_PASSWORD=tiga#333
+      - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
+      - KAFKA_CONSUMER_KEY_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+      - KAFKA_CONSUMER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+      - KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka:9092
+      - KAFKA_CONSUMER_GROUP_ID=otokabe
+      - KAFKA_CONSUMER_AUTO_OFFSET_RESET=earliest
+      - KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka:9092
+      - KAFKA_PRODUCER_KEY_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+      - KAFKA_PRODUCER_VALUE_DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+    ports:
+      - 3300:3300
     networks: 
       - otonet
 networks:
